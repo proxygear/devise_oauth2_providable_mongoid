@@ -1,9 +1,7 @@
-require "devise/oauth2_providable/mongoid/version"
-
 module Devise
   module Oauth2Providable
     module Mongoid
-      
+      VERSION = "0.0.1"
     end
   end
 end
