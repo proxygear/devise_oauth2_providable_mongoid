@@ -6,16 +6,29 @@ module Devise
 
         def self.included base
           base.class_eval do
-            include Mongoid::Document
+            include ::Mongoid::Document
+            include ::Mongoid::DefaultScope
+            include ::Mongoid::Timestamps
 
+            field :token,       type: String, unique: true
+            field :expires_at,  type: DateTime
+
+            index :token
+            index :expires_at
+            index :user_id
+            index Oauth2Providable.ABSTRACT(:client_sym_id)
+            
             include Oauth2Providable::Behaviors::RefreshToken
+            
+            default_scope orm_default_scope()
+            
+            extend ClassMethods
+          end
+        end
 
-            field :token,     type: String, unique: true
-            field :datetime,  type: Datetime
-
-            timestamps
-        
-            index :token, :expires_at, :user_id, :client_id
+        module ClassMethods
+          def find_by_token token
+            where(:token => token).first
           end
         end
       end
