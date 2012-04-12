@@ -37,17 +37,17 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         with :client
         with :user
         before do
-          #timenow = 2.days.from_now
-          #Time.stub!(:now).and_return(timenow)
-          
           expired_date = 2.days.ago
           
           code_class = user.send ABSTRACT(:authorization_code_plur)
-          @authorization_code = code_class.create(
+          @authorization_code = code_class.new(
             ABSTRACT(:client_sym_id) => client,
             :redirect_uri => client.redirect_uri,
             :expires_at => expired_date
           )
+          @authorization_code.save!
+          @authorization_code.expires_at = expired_date
+          @authorization_code.save!
           
           params = {
             :grant_type => 'authorization_code',
@@ -55,25 +55,30 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
             :client_secret => client.secret,
             :code => @authorization_code.token
           }
-          #Time.stub!(:now).and_return(timenow + 10.minutes)
 
           post '/oauth2/token', params
-        end
-        
-        it "not figure in data base (because expired)" do # default scope issue
-          assert_equal 0, ABSTRACT(:authorization_code).orm_default_scope().call().count
-          assert_equal 0, ABSTRACT(:authorization_code).all.size
-          assert_equal 1, ABSTRACT(:authorization_code).unscoped.count
         end
         
         it { response.code.to_i.should == 400 }
         it { response.content_type.should == 'application/json' }
         it 'returns json' do
+          puts "@authorization_code #{@authorization_code.inspect}"
+          puts "Class : #{ABSTRACT(:authorization_code).not_expired.inspect}"
           expected = {
             :error => 'invalid_grant',
             :error_description => 'invalid authorization code request'
           }
           response.body.should match_json(expected)
+        end
+        
+        it "not figure in data base (because expired)" do # default scope issue
+          @authorization_code.reload.expires_at.should < Time.now.utc
+          assert_equal 0, ABSTRACT(:authorization_code).not_expired.count
+          model = ABSTRACT(:authorization_code)
+          if code = model.of_client(client.id).not_expired.find_by_token(@authorization_code.token)
+            raise "dead"
+          end
+          assert_equal 1, ABSTRACT(:authorization_code).count
         end
       end
       context 'with invalid authorization_code' do

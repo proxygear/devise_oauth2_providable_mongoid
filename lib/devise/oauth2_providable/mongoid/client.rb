@@ -23,10 +23,9 @@ module Devise
             extend ClassMethods
           end
         end
-        
         module ClassMethods
-          def find_by_app_identifier bla
-            where(:app_identifier => bla).first
+          def find_by_app_identifier id
+            where(:app_identifier => id).first
           end
         end
       end

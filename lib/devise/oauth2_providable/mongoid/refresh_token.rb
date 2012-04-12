@@ -20,8 +20,6 @@ module Devise
             
             include Oauth2Providable::Behaviors::RefreshToken
             
-            default_scope orm_default_scope()
-            
             extend ClassMethods
           end
         end

@@ -12,7 +12,7 @@ module Devise
       extend ActiveSupport::Concern
 
       module ClassMethods        
-        def orm_default_scope
+        def lambda_not_expired
           lambda { where(:expires_at.gte => Time.now.utc) }
         end
       end
@@ -22,23 +22,4 @@ module Devise
       
     end
   end
-
-  module Strategies
-    class Oauth2AuthorizationCodeGrantTypeStrategy < Oauth2GrantTypeStrategy
-      def grant_type
-        'authorization_code'
-      end
-
-      def authenticate_grant_type(client)
-        client_code = client.send(Devise::Oauth2Providable.ABSTRACT(:authorization_code_plur)).find_by_token(params[:code])
-        if code = client_code
-          success! code.user
-        elsif !halted?
-          oauth_error! :invalid_grant, 'invalid authorization code request'
-        end
-      end
-    end
-  end
 end
-
-Warden::Strategies.add(:oauth2_authorization_code_grantable, Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy)

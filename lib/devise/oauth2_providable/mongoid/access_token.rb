@@ -21,8 +21,6 @@ module Devise
             
             include Devise::Oauth2Providable::Behaviors::AccessToken
             
-            default_scope orm_default_scope()
-            
             extend ClassMethods
           end
         end

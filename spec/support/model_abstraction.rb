@@ -16,6 +16,3 @@ module ModelAbstraction
 end
 
 include ModelAbstraction
-
-puts ModelAbstraction::SharedMethods.ABSTRACT
-puts ABSTRACT()

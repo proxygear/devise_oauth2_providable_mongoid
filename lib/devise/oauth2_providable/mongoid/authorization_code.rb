@@ -21,11 +21,6 @@ module Devise
             
             include Oauth2Providable::Behaviors::AuthorizationCode
             
-            default_scope lambda {
-              t = Time.now.utc;
-              where(:expires_at.gte => t)
-            }
-            
             extend ClassMethods
           end
         end
