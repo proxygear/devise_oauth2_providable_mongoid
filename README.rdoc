@@ -1,0 +1,20 @@
+# devise_oauth2_providable_mongoid
+
+This gem provides Mongoid behaviour for my custom version of devise_oauth2_providable gem
+* original gem by socialcast : https://github.com/socialcast/devise_oauth2_providable
+* my custom version : https://github.com/proxygear/devise_oauth2_providable
+
+My problem with original devise_oauth2_providable gem was :
+ * It was dedicated only to ActiveRecord ORM, I'm using Mongoid
+ * It forces to use provided models, I needed to plug behaviour in my own models
+
+## Usage
+
+Check out the core gem README at https://github.com/proxygear/devise_oauth2_providable
+But for the basic, you just need to :
+
+````.rb
+gem 'devise_oauth2_providable', :git => 'https://github.com/proxygear/devise_oauth2_providable.git'
+# The :branch => :mongo_mapper_orm is not necessary anymore. I did merge it into the master.
+gem 'devise_oauth2_providable_mongoid', :git => 'https://github.com/proxygear/devise_oauth2_providable_mongoid.git'
+````
