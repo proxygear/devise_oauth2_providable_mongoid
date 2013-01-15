@@ -17,12 +17,12 @@ describe Devise::Oauth2Providable::AuthorizationsController do
           :use_route => 'devise_oauth2_providable'
       end
       
-      it { should respond_with :ok }
-      it { should respond_with_content_type :html }
+      it('responds ok') { should respond_with :ok }
+      it('responds with html') { should respond_with_content_type :html }
       it { should assign_to(:redirect_uri).with(redirect_uri) }
       it { should assign_to(:response_type) }
-      it { should render_template 'devise/oauth2_providable/authorizations/new' }
-      it { should render_with_layout 'application' }
+      it('renders new authorization') { should render_template 'devise/oauth2_providable/authorizations/new' }
+      it('layouts application') { should render_with_layout 'application' }
     end
     context 'with invalid redirect_uri' do
       with :user

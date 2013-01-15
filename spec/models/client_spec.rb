@@ -13,7 +13,7 @@ describe ABSTRACT(:client) do
     it { should allow_mass_assignment_of :website }
     it { should allow_mass_assignment_of :redirect_url }
     it { should validate_uniqueness_of :app_identifier }
-    it { should have_index_for(:app_identifier) } #.with_options(:unique => true)
+    it { should have_index_for(app_identifier: 1).with_options(unique: true) }
     it { should_not allow_mass_assignment_of :app_identifier }
     it { should_not allow_mass_assignment_of :secret }
     it { should have_many ABSTRACT(:refresh_token_plur) }

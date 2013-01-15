@@ -7,19 +7,20 @@ module Devise
         def self.included base
           base.class_eval do
             include ::Mongoid::Document
-            include ::Mongoid::DefaultScope
             include ::Mongoid::Timestamps
 
             field :name,            type: String
             field :redirect_uri,    type: String
             field :website,         type: String
             field :secret,          type: String
-            field :app_identifier,  type: String, unique: true
-            
-            index :app_identifier
-            
+            field :app_identifier,  type: String
+
+            index({app_identifier: 1}, {unique: true})
+
+            validates_uniqueness_of :app_identifier
+
             include Oauth2Providable::Behaviors::Client
-            
+
             extend ClassMethods
           end
         end

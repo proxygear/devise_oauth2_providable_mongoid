@@ -16,10 +16,10 @@ describe "ABSTRACT(:access_token)" do
     it { should validate_presence_of :expires_at }
     it { should belong_to ABSTRACT(:refresh_token_sym) }
     it { should allow_mass_assignment_of ABSTRACT(:refresh_token_sym) }
-    it { should have_index_for ABSTRACT(:client_sym_id) }
-    it { should have_index_for :user_id }
-    it { should have_index_for(:token) } #.with_options(:unique => true) 
-    it { should have_index_for :expires_at }
+    it { should have_index_for(ABSTRACT(:client_sym_id) => 1)}
+    it { should have_index_for(user_id: 1) }
+    it { should have_index_for(token: 1).with_options(:unique => true) }
+    it { should have_index_for(expires_at: 1) }
   end
 
   describe '#expires_at' do
