@@ -9,6 +9,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'testing'
 
           params = {
+            :format => :json,
             :grant_type => 'password',
             :client_id => client.app_identifier,
             :client_secret => client.secret,
@@ -32,6 +33,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'testing'
 
           params = {
+            :format => :json,
             :grant_type => 'password',
             :username => @user.email,
             :password => 'testing'
@@ -53,6 +55,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'testing'
           params = {
+            :format => :json,
             :grant_type => 'password',
             :username => @user.email,
             :password => 'testing'
@@ -75,6 +78,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
         before do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'testing'
           params = {
+            :format => :json,
             :grant_type => 'password',
             :username => @user.email,
             :password => 'testing'
@@ -98,6 +102,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'testing'
 
           params = {
+            :format => :json,
             :grant_type => 'password',
             :client_id => client.app_identifier,
             :client_secret => client.secret,
@@ -123,6 +128,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'testing'
 
           params = {
+            :format => :json,
             :grant_type => 'password',
             :client_id => 'invalid',
             :client_secret => client.secret,
@@ -148,6 +154,7 @@ describe Devise::Strategies::Oauth2PasswordGrantTypeStrategy do
           @user = User.create! :email => 'ryan@socialcast.com', :password => 'testing'
 
           params = {
+            :format => :json,
             :grant_type => 'password',
             :client_id => client.app_identifier,
             :client_secret => 'invalid',
