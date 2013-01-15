@@ -62,8 +62,8 @@ describe Devise::Strategies::Oauth2AuthorizationCodeGrantTypeStrategy do
         it { response.code.to_i.should == 400 }
         it { response.content_type.should == 'application/json' }
         it 'returns json' do
-          puts "@authorization_code #{@authorization_code.inspect}"
-          puts "Class : #{ABSTRACT(:authorization_code).not_expired.inspect}"
+          #puts "@authorization_code #{@authorization_code.inspect}"
+          #puts "Class : #{ABSTRACT(:authorization_code).not_expired.inspect}"
           expected = {
             :error => 'invalid_grant',
             :error_description => 'invalid authorization code request'
