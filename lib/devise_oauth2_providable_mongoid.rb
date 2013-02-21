@@ -11,13 +11,19 @@ module Devise
     module ExpirableToken
       extend ActiveSupport::Concern
 
+      included do
+        class_eval do
+          extend ClassMethods
+        end
+      end
+
       module ClassMethods        
         def lambda_not_expired
           lambda { where(:expires_at.gte => Time.now.utc) }
         end
       end
     end
-    
+
     module Mongoid
       
     end

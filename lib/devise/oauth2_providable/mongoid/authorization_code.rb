@@ -4,8 +4,8 @@ module Devise
       module AuthorizationCode
         extend ActiveSupport::Concern
 
-        def self.included base
-          base.class_eval do
+        included do
+          class_eval do
             include ::Mongoid::Document
             include ::Mongoid::Timestamps
 
