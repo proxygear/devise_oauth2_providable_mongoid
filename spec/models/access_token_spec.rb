@@ -1,13 +1,11 @@
 require 'spec_helper'
 
 describe "ABSTRACT(:access_token)" do
-  #it { ABSTRACT(:access_token).table_name.should == ABSTRACT(:access_token_plur).to_s }
-
   describe 'basic access token instance' do
     with :client
-    subject do
-      ABSTRACT(:access_token).create! ABSTRACT(:client_sym) => client
-    end
+    let(:access_token) { ABSTRACT(:access_token).create! ABSTRACT(:client_sym) => client }
+    subject { access_token }
+
     it { should validate_presence_of :token }
     it { should validate_uniqueness_of :token }
     it { should belong_to :user }
