@@ -10,9 +10,6 @@ require 'database_cleaner'
 require 'shoulda-matchers'
 require 'factory_girl_rspec'
 
-FactoryGirl.definition_file_paths = [File.join(spec_root, 'factories')]
-FactoryGirl.find_definitions
-
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -20,20 +17,23 @@ ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
 
 RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+  config.include ModelAbstraction
+  config.include Devise::TestHelpers, :type => :controller
+  config.include ::Mongoid::Matchers
+    
   config.before(:suite) do
     DatabaseCleaner[:mongoid].strategy = :truncation
+    DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
     DatabaseCleaner.clean
   end
-  
-  config.include ModelAbstraction
-  config.include Devise::TestHelpers, :type => :controller
-  config.include Mongoid::Matchers
-  #config.use_transactional_fixtures = false
 
-  # enable rendering of views for controller tests
-  # see http://stackoverflow.com/questions/4401539/rspec-2-how-to-render-views-by-default-for-all-controller-specs
   config.render_views
 end

@@ -20,6 +20,9 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency(%q<rails>, [">= 3.1.0"])
   s.add_runtime_dependency "mongoid"
+  s.add_development_dependency 'mongoid-rspec'
+  
+  #, ">= 1.4.1", git: 'https://github.com/evansagge/mongoid-rspec.git'
   #s.add_runtime_dependency "devise_oauth2_providable"
   #s.add_runtime_dependency "actionpack", '= 3.2.2'
   #s.add_development_dependency gem "mongoid-rspec", ">= 1.4.1", git: "https://github.com/evansagge/mongoid-rspec.git"
